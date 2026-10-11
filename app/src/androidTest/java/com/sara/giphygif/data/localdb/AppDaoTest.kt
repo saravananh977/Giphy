@@ -37,19 +37,19 @@ class AppDaoTest {
     }
 
     @Test
-    fun insertGifTest() = runBlocking{
+    fun insertGifTest() = runBlocking<Unit> {
 
         val gif = GifEntity("1","title1","gif","https://gif.com")
 
         dao.insertGif(gif)
 
         val allgif = dao.fetchAllGifFromDb()
-        Truth.assertThat(allgif).isEqualTo(gif)
+        Truth.assertThat(allgif).containsExactly(gif)
     }
 
 
     @Test
-    fun removeGifFromDbTest() = runBlocking {
+    fun removeGifFromDbTest() = runBlocking<Unit> {
 
         val gif = GifEntity("1","title1","gif","https://gif.com")
 

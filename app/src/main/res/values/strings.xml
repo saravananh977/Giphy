@@ -3,4 +3,6 @@
     <string name="no_internet">Not Connected to Internet !</string>
     <string name="no_favourite_present">No Favourites present</string>
     <string name="search_hint">Search...</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="remove_from_favourites">Remove from favourites</string>
 </resources>

@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,6 +36,7 @@ import com.sara.giphygif.domain.model.Data
 import com.sara.giphygif.presentation.MainViewModel
 import com.sara.giphygif.utils.ErrorMessageComposable
 import com.sara.giphygif.utils.Loader
+import com.sara.giphygif.utils.TestTags
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
@@ -76,7 +78,8 @@ fun TrendingComposable(
                         MaterialTheme.colors.surface
                     )
                     .align(Alignment.CenterVertically)
-                    .weight(6f),
+                    .weight(6f)
+                    .testTag(TestTags.SEARCH_FIELD),
 
                 colors = TextFieldDefaults.textFieldColors(textColor=MaterialTheme.colors.primary,
                     backgroundColor = MaterialTheme.colors.surface,
@@ -166,7 +169,8 @@ fun TrendingComposable(
                                             Color.LightGray,
                                             RoundedCornerShape(5.dp)
                                         )
-                                        .align(Alignment.CenterHorizontally), onClick = {
+                                        .align(Alignment.CenterHorizontally)
+                                        .testTag(TestTags.trendingItem(it.id)), onClick = {
 
 
                                     }) {
@@ -213,7 +217,11 @@ fun TrendingComposable(
                                                     ) else painterResource(
                                                         id = R.drawable.ic_favourite
                                                     ),
-                                                    contentDescription = "", tint = Color.Magenta
+                                                    contentDescription = if (it.isFavourite) stringResource(
+                                                        id = R.string.remove_from_favourites
+                                                    ) else stringResource(
+                                                        id = R.string.add_to_favourites
+                                                    ), tint = Color.Magenta
                                                 )
 
                                             }
