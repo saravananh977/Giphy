@@ -15,6 +15,7 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import com.sara.giphygif.R
 import com.sara.giphygif.data.entities.GifEntity
 import com.sara.giphygif.presentation.MainViewModel
 import com.sara.giphygif.utils.ErrorMessageComposable
+import com.sara.giphygif.utils.TestTags
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -82,7 +84,8 @@ fun FavouriteComposable(
                                     1.dp,
                                     Color.LightGray,
                                     RoundedCornerShape(5.dp)
-                                ), onClick = {
+                                )
+                                .testTag(TestTags.favouriteItem(gifList.get(it).id)), onClick = {
 
 
                             }) {
@@ -109,7 +112,7 @@ fun FavouriteComposable(
 
                                         Icon(
                                             painter =  painterResource(id = R.drawable.ic_favourite_selected) ,
-                                            contentDescription = "",tint= Color.Magenta
+                                            contentDescription = stringResource(id = R.string.remove_from_favourites),tint= Color.Magenta
                                         )
 
                                     }
