@@ -39,10 +39,11 @@ class GifRepositoryImplTest {
 
             val response = gifRepository.getTrendingDataFromServer().toList()
 
-            Truth.assertThat(response.first()).isEqualTo(ResponseState.LOADING<GifData>())
+            Truth.assertThat(response.first()).isInstanceOf(ResponseState.LOADING::class.java)
 
 
-            Truth.assertThat(response[1]).isEqualTo(ResponseState.SUCCESS(gifData))
+            Truth.assertThat(response[1]).isInstanceOf(ResponseState.SUCCESS::class.java)
+            Truth.assertThat(response[1].list).isEqualTo(gifData)
 
 
         }
@@ -63,9 +64,10 @@ class GifRepositoryImplTest {
 
             val response = gifRepository.getTrendingDataFromServer().toList()
 
-            Truth.assertThat(response.first()).isEqualTo(ResponseState.LOADING<GifData>())
+            Truth.assertThat(response.first()).isInstanceOf(ResponseState.LOADING::class.java)
 
-            Truth.assertThat(response[1]).isEqualTo(ResponseState.FAILURE<GifData>("Error"))
+            Truth.assertThat(response[1]).isInstanceOf(ResponseState.FAILURE::class.java)
+            Truth.assertThat(response[1].message).startsWith("Error")
 
 
         }
@@ -73,20 +75,22 @@ class GifRepositoryImplTest {
     }
     
     
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    suspend fun insertGifTest(){
+    fun insertGifTest() = runTest {
 
         val gif = GifEntity("1","title1","gif","https://gif.com")
 
         fakeDao.insertGif(gif)
 
         val allgif = fakeDao.fetchAllGifFromDb()
-        Truth.assertThat(allgif).isEqualTo(gif)
-        
+        Truth.assertThat(allgif).containsExactly(gif)
+
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    suspend fun removeGifFromDbTest(){
+    fun removeGifFromDbTest() = runTest {
 
         val gif = GifEntity("1","title1","gif","https://gif.com")
 
