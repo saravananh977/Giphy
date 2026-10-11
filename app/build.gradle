@@ -41,6 +41,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    lint {
+        // Pre-existing issues are recorded here so CI only fails on new ones
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 dependencies {
